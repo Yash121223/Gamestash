@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    font-size: 16px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    backdrop-filter: blur(2px);
+    color: white;
+    height: 50px;
+}
+
+.navbar-logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-item {
+    position: relative;
+    margin: 0 20px; /* Increased margin to increase space between items */
+}
+
+.navbar-item a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+
+.navbar-item a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: transparent;
+    list-style: none;
+    padding: 10px 0;
+    min-width: 100%;
+    z-index: 2000;
+}
+
+.dropdown-menu li a {
+    color: rgb(252, 248, 248);
+    padding: 10px 15px;
+    display: block;
+}
+
+.dropdown-menu li a:hover {
+    background-color: transparent;
+}
+
+.navbar-item:hover .dropdown-menu {
+    display: block;
+    background: transparent;
+}
+
+.navbar-search {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-search input[type="text"] {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}
+
+.navbar-search button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #575757;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.navbar-icons a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    .navbar-menu {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar-item {
+        margin: 10px 0;
+    }
+
+    .navbar-search {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .navbar-icons {
+        width: 100%;
+        text-align: right;
+    }
+}

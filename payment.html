@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <style>
+    .payment-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .payment-option input {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Checkout</h1>
+  <form id="checkout-form">
+    <h2>Select Payment Method</h2>
+    <div class="payment-option">
+      <input type="radio" id="cod" name="payment" value="cod" checked>
+      <label for="cod">Cash on Delivery</label>
+    </div>
+    <div class="payment-option">
+      <input type="radio" id="credit-card" name="payment" value="credit-card">
+      <label for="credit-card">Credit Card</label>
+    </div>
+    <div class="payment-option">
+      <input type="radio" id="paypal" name="payment" value="paypal">
+      <label for="paypal">PayPal</label>
+    </div>
+    <button type="submit">Place Order</button>
+  </form>
+
+  <script>
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+      alert(`Order placed with ${paymentMethod}`);
+      // Handle form submission (send data to the backend)
+    });
+  </script>
+</body>
+</html>

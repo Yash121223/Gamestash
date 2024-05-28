@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Address Form</title>
+    <style>
+        body {
+            display: flex;
+    align-items: flex-start; /* Align items to the top */
+    justify-content: flex-start; /* Align items to the left */
+    margin-left: 80px;
+    padding: 0;
+    overflow-y: auto; 
+    font-family: Consolas,monaco,monospace;/* Enable vertical scrolling */
+        }
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/img/wallpaperflare.com_wallpaper\ \(9\).jpg');
+            background-size: cover;
+            background-position: center top; /* Shift the image up */
+            z-index: -1;
+            animation: zoomInBackground 10s ease-in-out infinite alternate;
+        }
+        .dark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(/img/noise.jpg);
+            opacity: 0.1; /* Adjust the opacity to make it darker or lighter */
+            z-index: -1;
+        }
+        @keyframes zoomInBackground {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1); /* Adjust the scale value as needed for the zoom level */
+            }
+        }
+        form {
+            background-color: transparent;
+            padding:45px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px; /* Maximum width for larger screens */
+            margin-top: 40px; /* Margin on top and bottom for spacing */
+        }
+
+        h2 {
+            margin-left: 3px;
+            font-size: 40px;
+            padding-bottom: 20px;
+            background: linear-gradient(90deg, #ffffff, #ffffff, #ffffff);
+            background-size: 300%;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: gradient 3s infinite;
+            text-align: left;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            margin-left: 3px;
+        }
+
+        .form-group label {
+            color: white;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 400px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 60px;
+        }
+
+        .form-group button {
+            width: 400px;
+            padding: 10px;
+            background-color: #2874f0;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #0b60d1;
+        }
+        .summary-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 20px;
+            width: 350px;
+            height: 350px; /* Set a fixed width */
+            box-sizing: border-box;
+            color: white;
+            position: fixed;
+            margin-top: 40px;
+            top: 110px; /* Adjust as needed */
+            right: 80px; /* Adjust as needed */
+            z-index: 2;
+        }
+        .summary-item {
+            margin-top: 5px;
+            padding: 4px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .total-amount {
+           display: flex;
+           justify-content: space-between;
+           margin-top: 160px; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-image"></div>
+    <div class="dark-overlay"></div>
+    <form>
+        <h2>Delivery Address</h2>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">E-mail</label>
+            <input type="tel" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="pincode">Pin Code</label>
+            <input type="text" id="pincode" name="pincode" required>
+        </div>
+        <div class="form-group">
+            <label for="locality">Locality</label>
+            <input type="text" id="locality" name="locality" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="city">City/District/Town</label>
+            <input type="text" id="city" name="city" required>
+        </div>
+        <div class="form-group">
+            <label for="state">State</label>
+            <select id="state" name="state" required>
+                <option value="">Select State</option>
+                <!-- Add more options as needed -->
+                <option value="state1">State 1</option>
+                <option value="state2">State 2</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="landmark">Landmark (Optional)</label>
+            <input type="text" id="landmark" name="landmark">
+        </div>
+        <div class="form-group">
+            <button type="submit">Save Address</button>
+        </div>
+    </form>
+    <div class="summary-container">
+        <div class="summary-item">
+            <span>Total Price:</span>
+            <span>$100.00</span>
+        </div>
+        <div class="summary-item">
+            <span>Discount Price:</span>
+            <span>$90.00</span>
+        </div>
+        <div class="summary-item">
+            <span>Delivery Charges:</span>
+            <span>$5.00</span>
+        </div>
+        <div class="total-amount">
+            <span>Total Amount:</span>
+            <span>$95.00</span>
+        </div>
+    </div>
+</body>
+</html>
