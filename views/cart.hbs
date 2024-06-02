@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: Consolas,monaco,monospace;
+            color: white;
+            cursor: url(/img/icons8-cursor-24.ico), auto;
+        }
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/img/wallpaperflare.com_wallpaper\ \(9\)-fotor-2024052122525.jpg');
+            background-size: cover;
+            background-position: center top; /* Shift the image up */
+            z-index: -1;
+            animation: zoomInBackground 10s ease-in-out infinite alternate;
+        }
+        @keyframes zoomInBackground {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1); /* Adjust the scale value as needed for the zoom level */
+            }
+        }
+        
+        .dark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Adjust the opacity to make it darker or lighter */
+            z-index: -1;
+        }
+        .content-container {
+            position: relative;
+            padding: 10px 20px; /* Adjusted padding to shift content up */
+            z-index: 1;
+        }
+        h1 {
+            margin-top: 30px;
+
+            color: transparent;
+            -webkit-text-stroke: 1px rgb(244, 237, 237); /* Adjusted margin-top to shift heading up */
+        }
+        .card-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            width: calc(70% - 20px); /* Increased width */
+            box-sizing: border-box;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s ease-in, border 0.1s ease;
+        
+        }
+        .card:hover {
+            transform: scale(1.02); 
+            border: 2px solid white;/* Scale up on hover */
+        }
+        .card img {
+            max-width: 200px;
+            max-height: 300px;
+            border-radius: 5px;
+            margin-right: 15px;
+            transition: transform 0.2s ease-in-out; 
+        }
+        .card:hover img {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 2px solid white; /* Shadow on hover */
+        }
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+        .card h3 {
+            margin: 10px 0 5px;
+        }
+        .card p {
+            margin: 0 0 10px;
+        }
+
+        .quantity-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .quantity-container button {
+            width: 30px;
+            height: 30px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .quantity-container input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border: none;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+        .summary-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 20px;
+            width: 350px;
+            height: 350px; /* Set a fixed width */
+            box-sizing: border-box;
+            color: white;
+            position: fixed;
+            top: 110px; /* Adjust as needed */
+            right: 80px; /* Adjust as needed */
+            z-index: 2;
+        }
+        .summary-item {
+            margin-top: 5px;
+            padding: 4px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .total-amount {
+           display: flex;
+           justify-content: space-between;
+           margin-top: 50px; /* Adjust as needed */
+        }
+        .place-order-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            background-color: #28A745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 102px;
+            width: 100%;
+
+        }
+        .card button {
+            margin: 5px 5px 0 0;
+            padding: 10px 15px;
+            font-size: 14px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .card button.remove {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <iframe src="navbar.html" style="width: 100%; height: 50px; border: none;"></iframe>
+    <div class="bg-image"></div>
+    <div class="dark-overlay"></div>
+    <div class="content-container">
+        <h1>My Cart</h1>
+        <div class="card-container">
+            <div class="card">
+                <img src="img/gta.jpg" alt="Your Image">
+                <div class="card-content">
+                    <h3>Product Title</h3>
+                    <p>Short description of the product.</p>
+                    <div class="price">$19.99</div>
+                    <div class="quantity-container">
+                        <button>-</button>
+                        <input type="text" value="1">
+                        <button>+</button>
+                    </div>
+                    <button class="remove" onclick="playClickSound()">Remove</button>
+                    <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
+                </div>
+            </div>
+            <div class="summary-container">
+                <div class="summary-item">
+                    <span>Total Price:</span>
+                    <span>$100.00</span>
+                </div>
+                <div class="summary-item">
+                    <span>Discount Price:</span>
+                    <span>$90.00</span>
+                </div>
+                <div class="summary-item">
+                    <span>Delivery Charges:</span>
+                    <span>$5.00</span>
+                </div>
+                <div class="total-amount">
+                    <span>Total Amount:</span>
+                    <span>$95.00</span>
+                </div>
+                <button class="place-order-button" onclick="playClickSound()">Place Order</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function playClickSound() {
+            var audio = document.getElementById('clickSound');
+            audio.play();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Consolas, monaco, monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 230px;
+            background-color: #2c3e50;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+        }
+        .sidebar h2 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 50px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px 10px;
+            cursor: pointer;
+        }
+        .sidebar ul li.active {
+        background-color: #34495e;
+        font-weight: bold; /* Example: Change font weight */
+        border-left: 5px solid #1abc9c; /* Example: Add left border */
+        }
+        .sidebar ul li:hover, .sidebar ul li.active {
+            background-color: #34495e;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            width: 100%;
+        }
+        .content h1 {
+            margin-top: 0;
+            margin-left: 25px;
+        }
+        .card {
+            background-color: #ecf0f1;
+            padding: 15px;
+            margin-top: 10px;
+            margin-left: 25px;
+            border-radius: 8px;
+        }
+        .card h3 {
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+        .card p {
+            margin-left: 10px;
+        }
+        .table {
+            width: 98%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-left: 25px;
+        }
+        h2 {
+            margin-left: 25px;
+        }
+        .table th, .table td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #34495e;
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+    function showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll('.content section').forEach(section => {
+            section.classList.add('hidden');
+        });
+        // Show the selected section
+        document.getElementById(sectionId).classList.remove('hidden');
+
+        // Add 'active' class to the clicked sidebar item and remove it from others
+        document.querySelectorAll('.sidebar ul li').forEach(item => {
+            item.classList.remove('active');
+        });
+        event.currentTarget.classList.add('active');
+    }
+
+    // Initialize the first tab as active
+    window.onload = function() {
+        showSection('dashboard');
+    }
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <ul>
+            <li onclick="showSection('dashboard')">Dashboard</li>
+            <li onclick="showSection('products')">Products</li>
+            <li onclick="showSection('content-management')">Content Management</li>
+            <li onclick="showSection('orders')">Orders</li>
+            <li onclick="showSection('customers')">Customers</li>
+            <li onclick="showSection('settings')">Settings</li>
+            <li onclick="showSection('audit-log')">Audit Log</li>
+            <li onclick="showSection('data-export')">Data Export</li>
+        </ul>
+    </div>
+    <div class="content">
+        <section id="dashboard">
+            <h1>Dashboard Overview</h1>
+            <div class="card">
+                <h3>Total Sales</h3>
+                <p>$25,000</p>
+            </div>
+            <div class="card">
+                <h3>Total Orders</h3>
+                <p>350</p>
+            </div>
+            <div class="card">
+                <h3>Total Customers</h3>
+                <p>1200</p>
+            </div>
+            <h2>Recent Orders</h2>
+            <table class="table">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>#001</td>
+                    <td>John Doe</td>
+                    <td>2024-05-20</td>
+                    <td>$120.00</td>
+                    <td>Processing</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>Jane Smith</td>
+                    <td>2024-05-19</td>
+                    <td>$80.00</td>
+                    <td>Completed</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </table>
+        </section>
+        
+        <section id="audit-log" class="hidden">
+            <h1>Audit Log</h1>
+            <table class="table">
+                <h2>Recent Activities</h2>
+                <tr>
+                    <th>Activity ID</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Date</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td>#101</td>
+                    <td>Admin</td>
+                    <td>Login</td>
+                    <td>2024-05-20</td>
+                    <td>Successful login from IP 192.168.1.1</td>
+                </tr>
+                <tr>
+                    <td>#102</td>
+                    <td>Admin</td>
+                    <td>Updated Product</td>
+                    <td>2024-05-19</td>
+                    <td>Updated price for product ID 555</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </table>
+        </section>
+
+        <section id="data-export" class="hidden">
+            <h1>Data Export</h1>
+            <div class="card">
+                <h3>Export Data</h3>
+                <p>Select the type of data you want to export:</p>
+                <button>Export Users</button>
+                <button>Export Orders</button>
+                <button>Export Products</button>
+                <!-- Add more export options as needed -->
+            </div>
+        </section>
+
+        <section id="content-management" class="hidden">
+            <h1>Content Management</h1>
+            <div class="card">
+                <h3>Manage Content</h3>
+                <p>Here you can create, edit, and delete content.</p>
+                <button>Create New Content</button>
+                <button>Edit Existing Content</button>
+                <button>Delete Content</button>
+                <!-- Add more content management options as needed -->
+            </div>
+        </section>
+    </div>
+</body>
+</html>

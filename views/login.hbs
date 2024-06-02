@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <video autoplay muted loop class="video-bg">
+        <source src="/img/nfs unbound.mp4" type="">
+        Your browser does not support the video tag.
+    </video> 
+    <div class="dark-overlay"></div>
+	<div class="wrapper">
+        <h1 class="typing-demo">Log In</h1>
+        <form action="#">
+            <input type="text" placeholder="Username" style="font-family: Consolas,monaco,monospace;">
+            <input type="password" placeholder="Password" style="font-family: Consolas,monaco,monospace;">
+        </form>
+        <button onclick="playClickSound()">Log In</button>
+        <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
+        <div class="member"> Already a member? <a href="/signup.html" onclick="playClickSound()">Create Account</a></div>
+    </div>
+    
+    <script>
+        function playClickSound() {
+            var audio = document.getElementById('clickSound');
+            audio.play();
+        }
+    </script>
+</body>
+</html>

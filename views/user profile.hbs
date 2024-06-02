@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            cursor: url(/img/icons8-cursor-24.ico), auto;
+            background-color: #2c2c2c;
+            color: #f6f1f1;
+        }
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .dark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(/img/noise.jpg);
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .content-container {
+            position: relative;
+            padding: 20px;
+            margin-top: 20vh;
+            z-index: 1;
+        }
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+            width: 80%;
+            margin: auto;
+        }
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #f6f1f1;
+            margin-bottom: 20px;
+        }
+        .profile-info {
+            text-align: center;
+        }
+        .profile-info h1 {
+            margin: 10px 0;
+            font-size: 2em;
+        }
+        .profile-info p {
+            margin: 5px 0;
+            font-size: 1.2em;
+        }
+        .profile-bio {
+            margin-top: 20px;
+            font-size: 1em;
+            text-align: center;
+            max-width: 600px;
+        }
+        .profile-attributes {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+        .profile-attributes div {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1em;
+        }
+        .profile-attributes label {
+            font-weight: bold;
+            color: #f6f1f1;
+        }
+        .profile-attributes span {
+            color: #cfcfcf;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 600px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .buttons button.edit-profile {
+            background-color: #3b3b40;
+            color: #f9f5f5;
+        }
+        .buttons button.edit-profile:hover {
+            background-color: #fcf7f7;
+            color: #00360b;
+            cursor: url("/img/icons8-cursor-24.ico"), auto;
+        }
+        .buttons button.my-orders {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .buttons button.my-orders:hover {
+            background-color: #45a049;
+        }
+        .buttons button.logout {
+            background-color: #d9534f;
+            color: #f9f5f5;
+        }
+        .buttons button.logout:hover {
+            background-color: #f9f5f5;
+            color: #d9534f;
+            cursor: url("/img/icons8-cursor-24.ico"), auto;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-bg">
+        <source src="/img/Marvel's Spider-Man 2 - Story Trailer   PS5 Games.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video> 
+    <div class="dark-overlay"></div>
+    <div class="content-container">
+        <div class="profile-container">
+            <img src="/img/user-profile-placeholder.png" alt="Profile Picture" class="profile-picture">
+            <div class="profile-info">
+                <h1>John Doe</h1>
+                <p>Email: johndoe@example.com</p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+            <div class="profile-attributes">
+                <div>
+                    <label>Address:</label>
+                    <span>123 Main St, Springfield, USA</span>
+
+            </div>
+            <div class="buttons">
+                <button class="my-orders">My Orders</button>
+                <button class="logout">Logout</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
