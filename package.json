@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon app"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +18,8 @@
     "path": "^0.12.7",
     "sessions": "^0.0.2-7",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.2"
   }
 }

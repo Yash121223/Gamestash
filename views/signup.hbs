@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="/css/signup.css">
     
 </head>
 <body>
@@ -15,19 +15,19 @@
     <div class="dark-overlay"></div>
 	<div class="wrapper">
         <h1 class="typing-demo">Create Account</h1>
-        <form action="#">
-            <input type="text" placeholder="Username" style="font-family: Consolas,monaco,monospace;">
-            <input type="text" placeholder="Name" style="font-family: Consolas,monaco,monospace;">
-            <input type="password" placeholder="password" style="font-family: Consolas,monaco,monospace;">
-            <input type="password" placeholder="Re-Enter Password" style="font-family: Consolas,monaco,monospace;">
-        </form>
+        <form action="/signed" method="post">
+            <input type="text" name="username" placeholder="Username" style="font-family: Consolas,monaco,monospace;">
+            <input type="text" name="name" placeholder="Name" style="font-family: Consolas,monaco,monospace;">
+            <input type="password" name="password" placeholder="password" style="font-family: Consolas,monaco,monospace;">
+            <input type="password" name="repassword" placeholder="Re-Enter Password" style="font-family: Consolas,monaco,monospace;">
         <div class="terms">
             <input type="checkbox" id="checkbox">
             <label for="checkbox">I agree to these <a href="#">Terms & Conditions</a></label>
         </div>
-        <button onclick="playClickSound()">Sign Up</button>
+        <button type="submit" onclick="playClickSound()">Sign Up</button>
+        </form>
         <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
-        <div class="member"> Already a member? <a href="/login.html" onclick="playClickSound()">Login here</a>
+        <div class="member"> Already a member? <a href="/login" onclick="playClickSound()">Login here</a>
         </div>
     </div>
 
