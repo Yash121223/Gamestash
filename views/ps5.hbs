@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider and Cards</title>
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+  <link rel="stylesheet" href="/css/ps5.css">
+</head>
+
+<body>
+  <iframe src="/navbar" style="width: 100%; height: 60px; border: none; position: fixed; top: 0; left: 0; z-index: 1000;"></iframe>
+  <div class="bg-image"></div>
+  <div class="dark-overlay"></div>
+  <div class="slider">
+    <button id="button1">&#10094;</button>
+    <button id="button2">&#10095;</button>
+    <div class="slides">
+      <div class="slide">
+        <img src="/img/wallpaperflare.com_wallpaper (16).jpg" alt="Slide 1">
+      </div>
+      <div class="slide">
+        <img src="/img/wallpaperflare.com_wallpaper (12).jpg" alt="Slide 2">
+      </div>
+      <div class="slide">
+        <img src="/img/battlefield.jpg" alt="Slide 3">
+      </div>
+      <div class="slide">
+        <img src="/img/breakpoint.png" alt="Slide 4">
+      </div>
+      <div class="slide">
+        <img src="/img/wallpaperflare.com_wallpaper (15).jpg" alt="Slide 5">
+      </div>
+      <div class="slide">
+        <img src="/img/fc 24.jpg" alt="Slide 1">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="cards">
+    <h2>New Releases</h2>
+    {{#items}}
+    <div class="card">
+      {{!-- {{-- <img src="img/gta.jpg" alt="Your Image"> --}} 
+      {{image}}
+      <div class="card-content">
+        <h3>{{item_name}}</h3>
+        <p>{{description}}</p>
+        <div class="price">${{price}}</div>
+        <button class="wishlist" onclick="playClickSound();addToWishlist()">Add to Wishlist</button>
+        <form action="/user/info" method="post">
+        <input type="text" name="item_name" value="{{item_name}}" hidden >
+        <button type="submit" class="buy-now" onclick="playClickSound()">Buy Now</button>
+        </form>
+        <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
+      </div>
+    </div>
+    {{/items}}
+    
+    </div>
+  </body>
+  <script src="/js/ps5 disc.js"></script>
+</html>

@@ -14,11 +14,11 @@
     <div class="dark-overlay"></div>
 	<div class="wrapper">
         <h1 class="typing-demo">Log In</h1>
-        <form action="#">
-            <input type="text" placeholder="Username" style="font-family: Consolas,monaco,monospace;">
-            <input type="password" placeholder="Password" style="font-family: Consolas,monaco,monospace;">
+        <form action="/user/logged", method="post">
+            <input type="text" name="username" placeholder="Username" style="font-family: Consolas,monaco,monospace;">
+            <input type="password" name="password" placeholder="Password" style="font-family: Consolas,monaco,monospace;">
+        <button type="submit" onclick="playClickSound()">Log In</button>
         </form>
-        <button onclick="playClickSound()">Log In</button>
         <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
         <div class="member"> Already a member? <a href="/signup" onclick="playClickSound()">Create Account</a></div>
     </div>

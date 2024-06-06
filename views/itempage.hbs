@@ -76,6 +76,7 @@
         .item-details {
             max-width: 600px;
             margin-left: 200px;
+            color: #333;
         }
         .price-discount-container {
             display: flex;
@@ -229,13 +230,14 @@
             <img src="/img/1.Sony Ps5 Spiderman 2 Standard Edn..jpg" alt="Item Image" class="item-image">
         </div>
             <div class="item-details">
-                <h1>Item Title</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                {{#product}}
+                <h1>{{item_name}}</h1>
+                <p>{{description}}</p>
                 <div class="rating">
                     <span>&#9899;</span><span>&#9899;</span><span>&#9899;</span><span>&#9899;</span><span>&#9899;</span>
                 </div>
                 <div class="price-discount-container">
-                    <div class="price">$99.99</div>
+                    <div class="price">${{price}}</div>
                     <div class="discount">20% off</div>
                 </div>
                 <div class="in-stock">In Stock</div>
@@ -243,85 +245,28 @@
                     <button>Add to Cart</button>
                     <button>Wishlist</button>
                 </div>
+                {{/product}}
             </div>
         </div>
         <div class="recommended-section">
             <h2>Recommended for You</h2>
-            <div class="cards">
+            {{#items}}
             <div class="card">
-                <img src="img/1.Sony Ps5 Spiderman 2 Standard Edn..jpg" alt="Your Image">
-                <div class="card-content">
-                <h3>Card Title 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div class="price">$19.99</div>
-                <button class="buy-now" onclick="playClickSound()">Buy Now</button>
+            {{!-- {{-- <img src="img/gta.jpg" alt="Your Image"> --}} 
+            {{image}}
+            <div class="card-content">
+                <h3>{{item_name}}</h3>
+                <p>{{description}}</p>
+                <div class="price">${{price}}</div>
+                <button class="wishlist" onclick="playClickSound();addToWishlist()">Add to Wishlist</button>
+                <form action="/user/info" method="post">
+                <input type="text" name="item_name" value="{{item_name}}" disabled hidden >
+                <button type="submit" class="buy-now" onclick="playClickSound()">Buy Now</button>
+                </form>
                 <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
             </div>
             </div>
-            <div class="card">
-                <img src="img/ac valhalla ps5.jpg" alt="Your Image">
-                <div class="card-content">
-                <h3>Card Title 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div class="price">$19.99</div>
-                <button class="buy-now" onclick="playClickSound()">Buy Now</button>
-                <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
-            </div>
-            </div>
-            <div class="card">
-                <img src="img/miles morales.jpg" alt="Your Image">
-                <div class="card-content">
-                <h3>Card Title 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div class="price">$19.99</div>
-                <button class="buy-now" onclick="playClickSound()">Buy Now</button>
-                <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
-            </div>
-            </div>
-        </div>
-            <h2>Similar Products</h2>
-            <div class="cards">
-            <div class="card">
-                <img src="img/gta.jpg" alt="Your Image">
-                <div class="card-content">
-                <h3>Card Title 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div class="price">$19.99</div>
-                <button class="buy-now" onclick="playClickSound()">Buy Now</button>
-                <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
-            </div>
-            </div>
-            <div class="card">
-                <img src="img/gta.jpg" alt="Your Image">
-                <div class="card-content">
-                <h3>Card Title 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div class="price">$19.99</div>
-                <button class="buy-now" onclick="playClickSound()">Buy Now</button>
-                <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
-            </div>
-            </div>
-            <div class="card">
-                <img src="img/gta.jpg" alt="Your Image">
-                <div class="card-content">
-                <h3>Card Title 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div class="price">$19.99</div>
-                <button class="buy-now" onclick="playClickSound()">Buy Now</button>
-                <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
-            </div>
-            </div>
-            <div class="card">
-                <img src="img/gta.jpg" alt="Your Image">
-                <div class="card-content">
-                <h3>Card Title 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div class="price">$19.99</div>
-                <button class="buy-now" onclick="playClickSound()">Buy Now</button>
-                <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
-            </div>
-            </div>
-            </div>
+            {{/items}}
         </div>
     </div>
     <script src="itempage.js"></script> 

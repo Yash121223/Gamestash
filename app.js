@@ -6,6 +6,14 @@ const user = require('./routes/user')
 const admin = require('./routes/admin')
 const pool = require('./models/pool')
 const body_parser = require('body-parser')
+const session = require('express-session')
+
+app.use(session({
+    secret:'panda',
+    resave:false,
+    saveUninitialized:false,
+    cookie:{maxAge:3600000*5}
+}))
 
 app.use(body_parser.urlencoded({
     extended:false
@@ -20,7 +28,7 @@ const hbs = require('hbs')
 app.set('view engine','hbs')
 
 // uncommnet karna jab user aur admin ki js likhenge
-// app.use('/user',user)
+app.use('/user',user)
 // app.use('/admin',admin)
 
 app.get('/',(req,res)=>{
@@ -39,6 +47,21 @@ app.get('/signup',(req,res)=>{
     res.render('signup')
     
 })
+
+app.get('/cart',(req,res)=>{
+    res.render('cart')
+    
+})
+
+// app.get('/itempage',(req,res)=>{
+//     res.render('itempage')
+    
+// })
+
+// app.get('/ps5',(req,res)=>{
+//     res.render('ps5 disc')
+    
+// })
 
 
 

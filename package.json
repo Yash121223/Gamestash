@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon app"
+    "start": "nodemon app"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "hbs": "^4.2.0",
     "mysql": "^2.18.1",
     "path": "^0.12.7",
