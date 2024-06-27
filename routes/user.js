@@ -393,6 +393,10 @@ route.post('/ordercomplete', (req, res) => {
     });
 });
 
+
+
+
+
 route.get('/myorders', (req, res) => {
     if (!req.session.username) {
         return res.redirect('/login');
@@ -421,7 +425,6 @@ route.get('/myorders', (req, res) => {
             return res.send(err);
         }
 
-        // Group orders by order_id
         const orders = results.reduce((acc, order) => {
             if (!acc[order.order_id]) {
                 acc[order.order_id] = {
