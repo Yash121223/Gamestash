@@ -386,14 +386,63 @@ route.post('/ordercomplete', (req, res) => {
                         return res.send(err);
                     }
 
-                    res.send('Order completed successfully');
+                    res.redirect('/user/myorders');
                 });
             });
         });
     });
 });
 
+route.get('/myorders', (req, res) => {
+    if (!req.session.username) {
+        return res.redirect('/login');
+    }
 
+    const username = req.session.username;
+    const query = `
+        SELECT 
+            od.order_id,
+            od.order_date,
+            od.status,
+            od.total_amount,
+            oi.item_name,
+            oi.quantity,
+            oi.price
+        FROM 
+            order_details od
+        JOIN 
+            order_items oi ON od.order_id = oi.order_id
+        WHERE 
+            od.username = ? AND od.status = 'Payment Done';
+    `;
+
+    pool.query(query, [username], (err, results) => {
+        if (err) {
+            return res.send(err);
+        }
+
+        // Group orders by order_id
+        const orders = results.reduce((acc, order) => {
+            if (!acc[order.order_id]) {
+                acc[order.order_id] = {
+                    order_id: order.order_id,
+                    order_date: order.order_date,
+                    status: order.status,
+                    total_amount: order.total_amount,
+                    items: []
+                };
+            }
+            acc[order.order_id].items.push({
+                item_name: order.item_name,
+                quantity: order.quantity,
+                price: order.price
+            });
+            return acc;
+        }, {});
+
+        res.render('myorders', { orders: Object.values(orders) });
+    });
+});
 
 
 route.get('/logout', (req, res) => {

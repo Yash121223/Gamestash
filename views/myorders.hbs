@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <style>
+        .order {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        .order h2 {
+            margin: 0;
+        }
+        .order ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .order ul li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Orders</h1>
+    <div id="orders">
+        {{#each orders}}
+            <div class="order">
+                <h2>Order ID: {{this.order_id}}</h2>
+                <p>Order Date: {{this.order_date}}</p>
+                <p>Status: {{this.status}}</p>
+                <p>Total Amount: ${{this.total_amount}}</p>
+                <h3>Items:</h3>
+                <ul>
+                    {{#each this.items}}
+                        <li>{{this.item_name}} - Quantity: {{this.quantity}} - Price: ${{this.price}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        {{/each}}
+    </div>
+</body>
+</html>
