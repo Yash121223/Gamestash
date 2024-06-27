@@ -453,17 +453,6 @@ route.get('/logout', (req, res) => {
     res.redirect('/login');
     console.log(req.session.username);
 
-})
-
-
-
-
-
-
-
-
-
-
-
+});
 
 module.exports = route;
