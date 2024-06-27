@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Wishlist</title>
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -14,6 +16,7 @@
             font-family: Arial, sans-serif;
             color: white;
         }
+
         .bg-image {
             position: fixed;
             top: 0;
@@ -25,25 +28,30 @@
             background-position: center top;
             z-index: -1;
         }
+
         .dark-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Adjust the opacity to make it darker or lighter */
+            background: rgba(0, 0, 0, 0.5);
+            /* Adjust the opacity to make it darker or lighter */
             z-index: -1;
         }
+
         .content-container {
             position: relative;
             padding: 20px;
             z-index: 1;
         }
+
         h1 {
             margin-top: 30px;
             margin-left: 48px;
             margin-bottom: 30px;
         }
+
         .card {
             background-color: rgba(233, 227, 227, 0);
             backdrop-filter: blur(10px);
@@ -60,35 +68,43 @@
             box-sizing: border-box;
             transition: transform 0.2s ease-in, border 0.1s ease;
         }
+
         .card img {
             width: 100%;
             border-radius: 8px;
             height: 300px;
             width: 200px;
             border: 1.5px solid white;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
+
         .card:hover img {
-            border: 1px solid rgb(249, 244, 244); /* Add black border on hover */
+            border: 1px solid rgb(249, 244, 244);
+            /* Add black border on hover */
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.8);
         }
+
         .card:hover {
             transform: scale(1.02);
             margin-top: 20px;
         }
+
         .card .price {
             font-size: 18px;
             font-weight: bold;
             color: #333;
             margin-bottom: 10px;
         }
+
         .card h3 {
             margin: 10px 0 5px;
             color: #f6f1f1;
         }
+
         .card p {
             color: #f4f3f3;
         }
+
         .card button {
             display: block;
             width: 100%;
@@ -97,37 +113,47 @@
             background-color: #3b3b40;
             color: #f9f5f5;
             border-radius: 10px;
-            font-family: Consolas,monaco,monospace;
+            font-family: Consolas, monaco, monospace;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
         }
+
         .card button:hover {
             background-color: #fcf7f7;
             color: #00360b;
             cursor: url("/img/icons8-cursor-24.ico"), auto;
         }
+
         .card .remove {
             margin-top: 6px;
         }
     </style>
 </head>
+
 <body>
     <div class="bg-image"></div>
     </div>
     <div class="dark-overlay"></div>
     <div class="content-container">
         <h1>My Wishlist</h1>
+        {{#wishes}}
         <div class="card">
-            <img src="img/gta.jpg" alt="Your Image">
-            <h3>Card Title 1</h3>
-            <p>Lorem ipsum   elit.</p>
-            <div class="price">$19.99</div>
+            <img src="{{image}}" alt="Your Image">
+            <h3>{{item_name}}</h3>
+            <p>{{description}}</p>
+            <div class="price">${{price}}</div>
             <button class="buy-now" onclick="playClickSound()">Buy Now</button>
             <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
-            <button class="remove" onclick="playClickSound()">Remove</button>
+            <form action="/user/wishlistdelete" method="POST">
+                <input type="text" name="item" value="{{item_name}}" hidden>
+                <button class="remove" type="submit" onclick="playClickSound()">Remove</button>
+            </form>
+
         </div>
+        {{/wishes}}
     </div>
     <script src="wishlist.js"></script>
 </body>
+
 </html>

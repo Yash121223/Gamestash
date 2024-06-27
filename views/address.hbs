@@ -150,7 +150,8 @@
 <body>
     <div class="bg-image"></div>
     <div class="dark-overlay"></div>
-    <form>
+    <form method="post" action="/user/orderdone" id="addressform">
+    
         <h2>Delivery Address</h2>
         <div class="form-group">
             <label for="name">Name</label>
@@ -193,18 +194,20 @@
             <label for="landmark">Landmark (Optional)</label>
             <input type="text" id="landmark" name="landmark">
         </div>
-        <div class="form-group">
-            <button type="submit">Save Address</button>
-        </div>
+    <div class="form-group">
+            <button type="submit" >Save Address</button>
+    </div>
+        
     </form>
     <div class="summary-container">
+      
         <div class="summary-item">
             <span>Total Price:</span>
-            <span>$100.00</span>
+            <span>${{price}}</span>
         </div>
         <div class="summary-item">
             <span>Discount Price:</span>
-            <span>$90.00</span>
+            <span>${{discount}}</span>
         </div>
         <div class="summary-item">
             <span>Delivery Charges:</span>
@@ -212,8 +215,11 @@
         </div>
         <div class="total-amount">
             <span>Total Amount:</span>
-            <span>$95.00</span>
+            <span>${{amount}}</span>
         </div>
+        
+
     </div>
 </body>
+
 </html>

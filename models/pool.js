@@ -4,7 +4,7 @@ const pool=mysql.createConnection({
     user:"root",
     password:"",
     database:"game",
-    port:3310
+    port:3306
 })
 
 pool.connect((err)=>{

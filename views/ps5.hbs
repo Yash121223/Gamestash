@@ -48,7 +48,11 @@
         <h3>{{item_name}}</h3>
         <p>{{description}}</p>
         <div class="price">${{price}}</div>
+        <form action="/user/wishlistadd" method="post">
+        <input type="text" name="item_name" value="{{item_name}}" hidden >
         <button class="wishlist" onclick="playClickSound();addToWishlist()">Add to Wishlist</button>
+        </form>
+        
         <form action="/user/info" method="post">
         <input type="text" name="item_name" value="{{item_name}}" hidden >
         <button type="submit" class="buy-now" onclick="playClickSound()">Buy Now</button>

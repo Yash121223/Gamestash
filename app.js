@@ -29,7 +29,7 @@ app.set('view engine','hbs')
 
 // uncommnet karna jab user aur admin ki js likhenge
 app.use('/user',user)
-// app.use('/admin',admin)
+app.use('/admin',admin)
 
 app.get('/',(req,res)=>{
     res.render('index')

@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <link href="https://fonts.cdnfonts.com/css/martian-mono" rel="stylesheet">
+    <title>Admin</title>
     <style>
         body {
-            font-family: Consolas, monaco, monospace;
+            font-family: 'Martian Mono', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
+            cursor: url(/Gamestash/img/icons8-cursor-24.ico), auto;
         }
         .sidebar {
             width: 230px;
@@ -33,9 +35,9 @@
             cursor: pointer;
         }
         .sidebar ul li.active {
-        background-color: #34495e;
-        font-weight: bold; /* Example: Change font weight */
-        border-left: 5px solid #1abc9c; /* Example: Add left border */
+            background-color: #34495e;
+            font-weight: bold;
+            border-left: 5px solid #1abc9c;
         }
         .sidebar ul li:hover, .sidebar ul li.active {
             background-color: #34495e;
@@ -49,18 +51,18 @@
             margin-top: 0;
             margin-left: 25px;
         }
-        .card {
+        .total {
             background-color: #ecf0f1;
             padding: 15px;
             margin-top: 10px;
             margin-left: 25px;
             border-radius: 8px;
         }
-        .card h3 {
+        .total h3 {
             margin-top: 10px;
             margin-left: 10px;
         }
-        .card p {
+        .total p {
             margin-left: 10px;
         }
         .table {
@@ -84,6 +86,141 @@
         .hidden {
             display: none;
         }
+        .total button{
+            width: 100%;
+            background-color: #a71717;
+            color: #fff;
+            padding: 20px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 10px 5px;
+            display: inline-block;
+            font-family: consolas, monaco, monospace;
+        }
+        .total button:hover{
+            background-color: #ffffff;
+            color: #a71717;
+            border: 1px solid #a71717;
+        }
+        .card {
+            width: 250px;
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .card img {
+            width: calc(100% - 20px); /* Subtracting padding from width */
+            height: auto;
+            display: block;
+            border-radius: 5px;
+            margin: 10px auto 0; /* Padding top and centering horizontally */
+        }
+
+        .card-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-content h3 {
+            margin: 10px 0;
+        }
+
+        .card-content p {
+            margin: 5px 0;
+            color: #777;
+        }
+
+        .price-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 15px 0;
+        }
+
+        .price {
+            font-size: 24px;
+            color: #333;
+        }
+
+        #discount {
+            color: red;
+            font-size: 16px;
+        }
+
+        .card button{
+            width: 100%;
+            background-color: #a71717;
+            color: #fff;
+            padding: 20px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 10px 5px;
+            display: inline-block;
+            font-family: consolas, monaco, monospace;
+        }
+
+        .card button:hover {
+            background-color: #ffffff;
+            color: #a71717;
+            border: 1px solid #a71717;
+        }
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            padding: 20px;
+            height: 250px;
+        }
+        .buttons{
+            display: flex;
+    flex-direction: row;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    padding: 20px;
+    margin-bottom: 20px;
+        }
+        .buttons button {
+    /* Add specific button styles here */
+    margin-right: 10px; /* Space between buttons */
+}
+        #statusModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        #statusModalContent {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+        #closeModal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        #closeModal:hover,
+        #closeModal:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
     <script>
     function showSection(sectionId) {
@@ -101,9 +238,71 @@
         event.currentTarget.classList.add('active');
     }
 
+    function openModal(orderId, currentStatus, productDetails, quantity) {
+        const modal = document.getElementById('statusModal');
+        const select = document.getElementById('statusSelect');
+        const details = document.getElementById('productDetails');
+        const qty = document.getElementById('quantity');
+        select.value = currentStatus;
+        select.setAttribute('data-order-id', orderId);
+        details.textContent = productDetails;
+        qty.textContent = quantity;
+        modal.style.display = 'block';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('statusModal');
+        modal.style.display = 'none';
+    }
+
+    function saveStatus() {
+        const select = document.getElementById('statusSelect');
+        const orderId = select.getAttribute('data-order-id');
+        const newStatus = select.value;
+        const statusCell = document.querySelector(`#all-orders td[data-order-id="${orderId}"]`);
+        if (statusCell) {
+            statusCell.innerText = newStatus;
+            const orderRow = statusCell.closest('tr');
+            orderRow.remove(); // Remove the order from the All Orders section
+            moveOrderToSection(orderRow, newStatus); // Move the order to the appropriate section
+        }
+        closeModal();
+        console.log(`Order ID: ${orderId}, New Status: ${newStatus}`);
+        // Add your code here to save the status to your database or backend
+    }
+
+    function moveOrderToSection(orderRow, newStatus) {
+    if (newStatus === 'Completed') {
+        // Append the order to the Completed Orders section
+        const completedOrdersTable = document.querySelector('#completed-orders tbody');
+        completedOrdersTable.appendChild(orderRow);
+        orderRow.dataset.section = 'completed'; // Add data attribute indicating completed section
+
+        // Remove the update status button
+        const updateButtonCell = orderRow.querySelector('td:last-child');
+        if (updateButtonCell) {
+            updateButtonCell.remove();
+        }
+    } else if (newStatus === 'Pending') {
+        // Append the order to the Pending Orders section
+        const pendingOrdersTable = document.querySelector('#pending-orders tbody');
+        pendingOrdersTable.appendChild(orderRow);
+        orderRow.dataset.section = 'pending'; // Add data attribute indicating pending section
+    }
+}
+
+
     // Initialize the first tab as active
     window.onload = function() {
-        showSection('dashboard');
+        showSection('all-orders');
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        const modal = document.getElementById('statusModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
     }
     </script>
 </head>
@@ -113,10 +312,10 @@
         <ul>
             <li onclick="showSection('dashboard')">Dashboard</li>
             <li onclick="showSection('products')">Products</li>
-            <li onclick="showSection('content-management')">Content Management</li>
-            <li onclick="showSection('orders')">Orders</li>
-            <li onclick="showSection('customers')">Customers</li>
-            <li onclick="showSection('settings')">Settings</li>
+            <li onclick="showSection('content-management')">Add Product</li>
+            <li onclick="showSection('all-orders')">Pending Orders</li>
+            <li onclick="showSection('completed-orders')">Completed Orders</li>
+            <li onclick="showSection('settings')">Log Out</li>
             <li onclick="showSection('audit-log')">Audit Log</li>
             <li onclick="showSection('data-export')">Data Export</li>
         </ul>
@@ -124,15 +323,15 @@
     <div class="content">
         <section id="dashboard">
             <h1>Dashboard Overview</h1>
-            <div class="card">
+            <div class="total">
                 <h3>Total Sales</h3>
                 <p>$25,000</p>
             </div>
-            <div class="card">
+            <div class="total">
                 <h3>Total Orders</h3>
                 <p>350</p>
             </div>
-            <div class="card">
+            <div class="total">
                 <h3>Total Customers</h3>
                 <p>1200</p>
             </div>
@@ -150,7 +349,7 @@
                     <td>John Doe</td>
                     <td>2024-05-20</td>
                     <td>$120.00</td>
-                    <td>Processing</td>
+                    <td>Pending</td>
                 </tr>
                 <tr>
                     <td>#002</td>
@@ -162,59 +361,249 @@
                 <!-- Add more rows as needed -->
             </table>
         </section>
-        
+
+        <section id="products" class="hidden">
+            <h1>Products</h1>
+            <div class="cards">
+            <div class="card">
+                <img src="/Gamestash/img/series x.png" alt="Card 2">
+                <div class="card-content">
+                <h3>Spider - Man 2</h3>
+                <p>Play Station 5</p>
+                <p id="stock">In Stock</p>
+                <div class="price-container">
+                <div class="price">₹ 20,000</div>
+                <p id="discount">10% off</p>
+                </div>
+                <button onclick="playClickSound();addToWishlist()">Remove Product</button>
+                <audio id="clickSound" src="/Gamestash/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/Gamestash/img/miles morales.jpg" alt="Card 2">
+                <div class="card-content">
+                <h3>Spider - Man 2</h3>
+                <p>Play Station 5</p>
+                <p id="stock">In Stock</p>
+                <div class="price-container">
+                <div class="price">₹ 20,000</div>
+                <p id="discount">10% off</p>
+                </div>
+                <button onclick="playClickSound();addToWishlist()">Remove Product</button>
+                <audio id="clickSound" src="/Gamestash/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/Gamestash/img/series x.png" alt="Card 2">
+                <div class="card-content">
+                <h3>Spider - Man 2</h3>
+                <p>Play Station 5</p>
+                <p id="stock">In Stock</p>
+                <div class="price-container">
+                <div class="price">₹ 20,000</div>
+                <p id="discount">10% off</p>
+                </div>
+                <button onclick="playClickSound();addToWishlist()">Remove Product</button>
+                <audio id="clickSound" src="/Gamestash/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/Gamestash/img/series x.png" alt="Card 2">
+                <div class="card-content">
+                <h3>Spider - Man 2</h3>
+                <p>Play Station 5</p>
+                <p id="stock">In Stock</p>
+                <div class="price-container">
+                <div class="price">₹ 20,000</div>
+                <p id="discount">10% off</p>
+                </div>
+                <button onclick="playClickSound();addToWishlist()">Remove Product</button>
+                <audio id="clickSound" src="/Gamestash/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/Gamestash/img/series x.png" alt="Card 2">
+                <div class="card-content">
+                <h3>Spider - Man 2</h3>
+                <p>Play Station 5</p>
+                <p id="stock">In Stock</p>
+                <div class="price-container">
+                <div class="price">₹ 20,000</div>
+                <p id="discount">10% off</p>
+                </div>
+                <button onclick="playClickSound();addToWishlist()">Remove Product</button>
+                <audio id="clickSound" src="/Gamestash/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <section id="content-management" class="hidden">
+            <h1>Add Item & Slider</h1>
+            <div class="tabs">
+                <div class="tab-menu">
+                    <div class="tab-item" data-tab-id="add-slide-tab" onclick="showTab('add-slide-tab')">Add Slide</div>
+                    <div class="tab-item" data-tab-id="add-product-tab" onclick="showTab('add-product-tab')">Add Product</div>
+                    <div class="tab-item" data-tab-id="edit-product-tab" onclick="showTab('edit-product-tab')">Edit Product</div>
+                </div>
+                <div class="tab-content" id="add-slide-tab">
+                    <h2>Add Slide</h2>
+                    <div class="total">
+                        <!-- Content for adding slides -->
+                        <div class="buttons">
+                            <button>Add Slide 1</button>
+                            <button>Add Slide 2</button>
+                            <button>Add Slide 3</button>
+                            <!-- Add more buttons as needed -->
+                        </div>
+                        <div id="slide-cards-container" class="cards">
+                            <!-- New slide cards will be appended here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content hidden" id="add-product-tab">
+                    <h2>Add Product</h2>
+                    <div class="total">
+                        <!-- Content for adding products -->
+                        <div class="buttons">
+                            <button>Add Product A</button>
+                            <button>Add Product B</button>
+                            <button>Add Product C</button>
+                            <!-- Add more buttons as needed -->
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content hidden" id="edit-product-tab">
+                    <h2>Edit Product</h2>
+                    <div class="total">
+                        <!-- Content for editing products -->
+                        <div class="buttons">
+                            <button>Edit Product 1</button>
+                            <button>Edit Product 2</button>
+                            <button>Edit Product 3</button>
+                            <!-- Add more buttons as needed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="audit-log" class="hidden">
             <h1>Audit Log</h1>
-            <table class="table">
-                <h2>Recent Activities</h2>
-                <tr>
-                    <th>Activity ID</th>
-                    <th>User</th>
-                    <th>Action</th>
-                    <th>Date</th>
-                    <th>Details</th>
-                </tr>
-                <tr>
-                    <td>#101</td>
-                    <td>Admin</td>
-                    <td>Login</td>
-                    <td>2024-05-20</td>
-                    <td>Successful login from IP 192.168.1.1</td>
-                </tr>
-                <tr>
-                    <td>#102</td>
-                    <td>Admin</td>
-                    <td>Updated Product</td>
-                    <td>2024-05-19</td>
-                    <td>Updated price for product ID 555</td>
-                </tr>
-                <!-- Add more rows as needed -->
+            <table class="table" id="audit-log-table">
+                <thead>
+                    <tr>
+                        <th>Activity ID</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Date</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="audit-log-body">
+                    <!-- Audit log rows will be added dynamically here -->
+                </tbody>
             </table>
         </section>
 
         <section id="data-export" class="hidden">
             <h1>Data Export</h1>
-            <div class="card">
+            <div class="total">
                 <h3>Export Data</h3>
                 <p>Select the type of data you want to export:</p>
+                <div class="buttons">
                 <button>Export Users</button>
                 <button>Export Orders</button>
                 <button>Export Products</button>
+                </div>
                 <!-- Add more export options as needed -->
             </div>
         </section>
 
-        <section id="content-management" class="hidden">
-            <h1>Content Management</h1>
-            <div class="card">
-                <h3>Manage Content</h3>
-                <p>Here you can create, edit, and delete content.</p>
-                <button>Create New Content</button>
-                <button>Edit Existing Content</button>
-                <button>Delete Content</button>
-                <!-- Add more content management options as needed -->
-            </div>
+
+        <section id="all-orders">
+            <h1>All Orders</h1>
+            <table class="table">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Product Details</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+                <tr data-order-id="001">
+                    <td>#001</td>
+                    <td>John Doe</td>
+                    <td>2024-05-20</td>
+                    <td>$120.00</td>
+                    <td data-order-id="001">Pending</td>
+                    <td>Product A, Product B</td>
+                    <td>2, 3</td>
+                    <td><button onclick="openModal('001', 'Pending', 'Product A, Product B', '2, 3')">Update Status</button></td>
+                </tr>
+                <tr data-order-id="002">
+                    <td>#002</td>
+                    <td>Jane Smith</td>
+                    <td>2024-05-19</td>
+                    <td>$80.00</td>
+                    <td data-order-id="002">Completed</td>
+                    <td>Product C</td>
+                    <td>1</td>
+                    <td><button onclick="openModal('002', 'Completed', 'Product C', '1')">Update Status</button></td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </table>
         </section>
+
+        <section id="completed-orders" class="hidden">
+            <h1>Completed Orders</h1>
+            <table class="table">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Product Details</th>
+                    <th>Quantity</th>
+                </tr>
+                <!-- Rows will be moved here when status is updated to 'Completed' -->
+            </table>
+        </section>
+
+        <section id="pending-orders" class="hidden">
+            <h1>Pending Orders</h1>
+            <table class="table">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Product Details</th>
+                    <th>Quantity</th>
+                </tr>
+                <!-- Rows will be moved here when status is updated to 'Pending' -->
+            </table>
+        </section>
+    </div>
+
+    <!-- The Modal -->
+    <div id="statusModal" class="modal">
+        <div id="statusModalContent" class="modal-content">
+            <span id="closeModal" onclick="closeModal()">&times;</span>
+            <h2>Update Order Status</h2>
+            <label for="statusSelect">Status:</label>
+            <select id="statusSelect">
+                <option value="Completed">Completed</option>
+            </select>
+            <p>Product Details: <span id="productDetails"></span></p>
+            <p>Quantity: <span id="quantity"></span></p>
+            <button onclick="saveStatus()">Save</button>
+        </div>
     </div>
 </body>
 </html>

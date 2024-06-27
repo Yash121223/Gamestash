@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Item Page</title>
     <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -15,6 +17,7 @@
             font-family: 'Ubuntu';
             cursor: url(/img/icons8-cursor-24.ico), auto;
         }
+
         .video-bg {
             position: fixed;
             top: 0;
@@ -24,6 +27,7 @@
             object-fit: cover;
             z-index: -1;
         }
+
         .dark-overlay {
             position: fixed;
             top: 0;
@@ -31,22 +35,27 @@
             width: 100%;
             height: 100%;
             background: url(/img/noise.jpg);
-            opacity: 0.1; /* Adjust the opacity to make it darker or lighter */
+            opacity: 0.1;
+            /* Adjust the opacity to make it darker or lighter */
             z-index: -1;
         }
+
         .content-container {
             position: relative;
             padding: 20px;
             margin-top: 20vh;
             color: white;
-            z-index: 1; /* Added color for better visibility */
+            z-index: 1;
+            /* Added color for better visibility */
         }
+
         .item-container {
             display: flex;
             height: 80vh;
             align-items: flex-start;
             margin-bottom: 20px;
         }
+
         .item-image {
             max-width: 200px;
             max-height: 300px;
@@ -54,6 +63,7 @@
             border-radius: 8px;
             border: 4px solid rgb(253, 253, 253);
         }
+
         .item-image-wrapper {
             display: flex;
             align-items: center;
@@ -63,6 +73,7 @@
             margin-left: 150px;
             position: relative;
         }
+
         .item-background {
             width: 100%;
             height: 100%;
@@ -73,48 +84,61 @@
             left: 0;
             z-index: 0;
         }
+
         .item-details {
             max-width: 600px;
             margin-left: 200px;
             color: #333;
         }
+
         .price-discount-container {
             display: flex;
             align-items: center;
             margin-top: 20px;
         }
-        .price, .discount {
+
+        .price,
+        .discount {
             padding: 10px;
             font-size: 16px;
             margin-right: 20px;
         }
+
         .in-stock {
             font-size: 16px;
-            margin-top: 10px; /* Add some space between price discount container and in-stock indicator */
+            margin-top: 10px;
+            /* Add some space between price discount container and in-stock indicator */
         }
+
         .rating {
             margin-top: 10px;
         }
+
         .rating span {
             font-size: 11px;
             color: gold;
             margin-right: 5px;
         }
+
         .item-details h1 {
             margin-top: 0;
         }
+
         .pincode-container {
             display: flex;
             align-items: center;
             margin-top: 20px;
         }
+
         .pincode-container input {
             padding: 10px;
             font-size: 16px;
             border-radius: 5px 0 0 5px;
             border: 1px solid #ccc;
-            flex: 1; /* Take up remaining space */
+            flex: 1;
+            /* Take up remaining space */
         }
+
         .pincode-container button {
             padding: 10px 20px;
             font-size: 16px;
@@ -122,75 +146,91 @@
             border: 1px solid #ccc;
             cursor: pointer;
         }
+
         .buttons {
             margin-top: 20px;
         }
+
         .buttons button {
             padding: 10px 20px;
             font-size: 16px;
             margin-right: 10px;
             cursor: pointer;
         }
+
         .recommended-section {
             margin-top: 40px;
         }
+
         .recommended-section h2 {
             margin-bottom: 20px;
         }
+
         .cards {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             height: 250px;
         }
+
         .card {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
             padding: 15px;
             margin: 10px;
-            width: calc(33% - 20px); /* Increased width */
+            width: calc(33% - 20px);
+            /* Increased width */
             box-sizing: border-box;
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: transform 0.2s ease-in, border 0.1s ease ;
+            transition: transform 0.2s ease-in, border 0.1s ease;
         }
+
         .card-content {
             display: flex;
             flex-direction: column;
             justify-content: center;
             flex: 1;
         }
+
         .card img {
             max-width: 200px;
             max-height: 300px;
             border-radius: 5px;
             margin-right: 15px;
             border: 1.5px solid white;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
+
         .card:hover img {
-            border: 1px solid rgb(249, 244, 244); /* Add black border on hover */
+            border: 1px solid rgb(249, 244, 244);
+            /* Add black border on hover */
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.8);
         }
+
         .card:hover {
             transform: scale(1.05);
         }
+
         .card .price {
             font-size: 18px;
             font-weight: bold;
             color: #333;
             margin-bottom: 10px;
         }
+
         .card h3 {
             margin: 10px 0 5px;
             color: #f6f1f1;
         }
+
         .card p {
             margin: 0 0 10px;
             color: #f4f3f3;
         }
+
         .card button {
             display: block;
             width: 100%;
@@ -199,51 +239,62 @@
             background-color: #3b3b40;
             color: #f9f5f5;
             border-radius: 10px;
-            font-family: Consolas,monaco,monospace;
+            font-family: Consolas, monaco, monospace;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
         }
+
         .card button:hover {
             background-color: #fcf7f7;
             color: #00360b;
             cursor: url("/img/icons8-cursor-24.ico"), auto;
         }
-        #Recommended{
+
+        #Recommended {
             margin-left: 50px;
             padding-top: 50px;
         }
     </style>
 </head>
+
 <body>
     <video autoplay muted loop class="video-bg">
         <source src="/img/Marvel's Spider-Man 2 - Story Trailer   PS5 Games.mp4" type="video/mp4">
         Your browser does not support the video tag.
-    </video> 
+    </video>
     <div class="dark-overlay"></div>
     </div>
     <div class="dark-overlay"></div>
     <div class="content-container">
         <div class="item-container">
-        <div class="item-image-wrapper">
-            <div class="item-background"></div>
-            <img src="/img/1.Sony Ps5 Spiderman 2 Standard Edn..jpg" alt="Item Image" class="item-image">
-        </div>
+            <div class="item-image-wrapper">
+                <div class="item-background"></div>
+                <img src="/img/1.Sony Ps5 Spiderman 2 Standard Edn..jpg" alt="Item Image" class="item-image">
+            </div>
             <div class="item-details">
                 {{#product}}
                 <h1>{{item_name}}</h1>
                 <p>{{description}}</p>
                 <div class="rating">
-                    <span>&#9899;</span><span>&#9899;</span><span>&#9899;</span><span>&#9899;</span><span>&#9899;</span>
+                    {{!-- <span>&#9899;</span><span>&#9899;</span><span>&#9899;</span><span>&#9899;</span><span>&#9899;</span> --}}
+                    {{rating}}
                 </div>
                 <div class="price-discount-container">
                     <div class="price">${{price}}</div>
-                    <div class="discount">20% off</div>
+                    <div class="discount">{{discount}} off</div>
                 </div>
-                <div class="in-stock">In Stock</div>
+                <div class="in-stock">{stk}</div>
                 <div class="buttons">
-                    <button>Add to Cart</button>
-                    <button>Wishlist</button>
+                    <form action="/user/cartadd" method="post">
+                        <input type="text" name="item" value="{{item_name}}" hidden>
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                    
+                    <form action="/user/wishlistadd" method="post">
+                        <input type="text" name="item" value="{{item_name}}" hidden>
+                        <button class="wishlist" onclick="playClickSound();addToWishlist()">Add to Wishlist</button>
+                    </form>
                 </div>
                 {{/product}}
             </div>
@@ -252,23 +303,27 @@
             <h2>Recommended for You</h2>
             {{#items}}
             <div class="card">
-            {{!-- {{-- <img src="img/gta.jpg" alt="Your Image"> --}} 
-            {{image}}
-            <div class="card-content">
-                <h3>{{item_name}}</h3>
-                <p>{{description}}</p>
-                <div class="price">${{price}}</div>
-                <button class="wishlist" onclick="playClickSound();addToWishlist()">Add to Wishlist</button>
-                <form action="/user/info" method="post">
-                <input type="text" name="item_name" value="{{item_name}}" disabled hidden >
-                <button type="submit" class="buy-now" onclick="playClickSound()">Buy Now</button>
-                </form>
-                <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
-            </div>
+                {{!-- {{-- <img src="img/gta.jpg" alt="Your Image"> --}}
+                {{image}}
+                <div class="card-content">
+                    <h3>{{item_name}}</h3>
+                    <p>{{description}}</p>
+                    <div class="price">${{price}}</div>
+                    <form action="/user/wishlistadd" method="post">
+                        <input type="text" name="item_name" value="{{item_name}}" hidden>
+                        <button class="wishlist" onclick="playClickSound();addToWishlist()">Add to Wishlist</button>
+                    </form>
+                    <form action="/user/info" method="post">
+                        <input type="text" name="item_name" value="{{item_name}}" disabled hidden>
+                        <button type="submit" class="buy-now" onclick="playClickSound()">Buy Now</button>
+                    </form>
+                    <audio id="clickSound" src="/img/mixkit-cool-interface-click-tone-2568.wav"></audio>
+                </div>
             </div>
             {{/items}}
         </div>
     </div>
-    <script src="itempage.js"></script> 
+    <script src="itempage.js"></script>
 </body>
+
 </html>
