@@ -18,7 +18,7 @@
 </head>
 <body>
   <h1>Checkout</h1>
-  <form id="checkout-form">
+  <form id="checkout-form" method="post" action="/user/ordercomplete">
     <h2>Select Payment Method</h2>
     <div class="payment-option">
       <input type="radio" id="cod" name="payment" value="cod" checked>
@@ -35,13 +35,6 @@
     <button type="submit">Place Order</button>
   </form>
 
-  <script>
-    document.getElementById('checkout-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-      alert(`Order placed with ${paymentMethod}`);
-      // Handle form submission (send data to the backend)
-    });
-  </script>
+  
 </body>
 </html>

@@ -284,7 +284,7 @@
                     <div class="price">${{price}}</div>
                     <div class="discount">{{discount}} off</div>
                 </div>
-                <div class="in-stock">{stk}</div>
+                {{!-- <div class="in-stock">{stk}</div> --}}
                 <div class="buttons">
                     <form action="/user/cartadd" method="post">
                         <input type="text" name="item" value="{{item_name}}" hidden>

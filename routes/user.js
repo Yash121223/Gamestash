@@ -170,25 +170,35 @@ route.get('/cart', (req, res) => {
 
 route.post('/cartadd', (req, res) => {
     if (req.session.username) {
-        pool.query(`select * from items where item_name = ?`, [req.body.item], (err, obj) => {
-            if (err)
-                res.send(err);
-            else {
-                let data = obj[0];
+        console.log('funct started');
+        pool.query(`SELECT * FROM items WHERE item_name = ?`, [req.body.item], (err, obj) => {
+            if (err) {
+                console.error("Error selecting item:", err);
+                res.send("Error selecting item: " + err.message);
+            } else {
 
-                pool.query(`INSERT INTO cart (username, image, title, description, price, discount, quantity) VALUES (?, ?, ?, ?, ?, ?, 1) ON DUPLICATE KEY UPDATE quantity = quantity + 1, price = price * (quantity); `, [req.session.username, data.image, data.item_name, data.description, data.price, data.discount], (err, obj1) => {
+                let data = obj[0];
+                console.log(req.session.username);
+                console.log(data);
+                pool.query(`insert into cart (username, image, title, description, price, discount, quantity) 
+                            VALUES (?, ?, ?, ?, ?, ?, 1) 
+                            ON DUPLICATE KEY UPDATE  price=price/quantity,quantity = quantity + 1, price = price * (quantity)`, 
+                            [req.session.username, data.image, data.item_name, data.description, data.price, data.discount], 
+                            (err, obj1) => {
                     if (err) {
-                        res.send(err);
+                        console.error("Error inserting into cart:", err);
+                        res.send("Error inserting into cart: " + err.message);
                     } else {
+                        console.log('data entered')
                         res.redirect('/user/cart');
                     }
-                })
+                });
             }
-        })
+        });
     } else {
         res.redirect('/login');
     }
-})
+});
 
 route.get('/quaadd', (req, res) => {
     if (req.session.username) {
@@ -252,11 +262,11 @@ route.post('/placeOrder', (req, res) => {
             return res.status(500).send('Error inserting order details');
         } else {
             const orderId = obj.insertId;
-            
-            
+
+
             const orderItems = itemarr.map((item, index) => [orderId, item, quantity[index]]);
-           
-            
+
+
             const query2 = `INSERT INTO order_items (order_id, item_name, quantity) VALUES ?`;
 
             pool.query(query2, [orderItems], (err, result2) => {
@@ -294,7 +304,7 @@ route.get('/orderConfirmation', (req, res) => {
 route.post('/orderdone', (req, res) => {
     if (req.session.username) {
         console.log('form1 done');
-        const da=req.body
+        const da = req.body
         pool.query(`INSERT INTO user_info (username, name, phone, email, pincode, locality, address, city, state, landmark)
 VALUES (?,?,?,?,?,?,?,?,?,?)
 ON DUPLICATE KEY UPDATE
@@ -307,25 +317,95 @@ ON DUPLICATE KEY UPDATE
     city = VALUES(city),
     state = VALUES(state),
     landmark = VALUES(landmark);
-`,[req.session.username, da.name,da.phone,da.email,da.pincode,da.locality,da.address,da.city,da.state,da.landmark],(err,obj)=>{
-    if(err)
-        res.send(err);
-    else{
-        res.redirect('/user/payment');
-    }
-})
-    }else{
+`, [req.session.username, da.name, da.phone, da.email, da.pincode, da.locality, da.address, da.city, da.state, da.landmark], (err, obj) => {
+            if (err)
+                res.send(err);
+            else {
+                console.log('address submitted');
+                res.redirect('/user/payment');
+            }
+        })
+    } else {
         res.redirect('/login');
     }
 })
 
-route.post('/orderdetailadd',(req,res)=>{
-    console.log('form 2 done')
+
+
+route.get('/payment', (req, res) => {
+    if (req.session.username) {
+        res.render('payment');
+
+    } else {
+    }
 })
 
-route.post('/payment', (req, res) => {
-    res.render('payment');
+
+route.post('/ordercomplete', (req, res) => {
+    if (!req.session.username) {
+        return res.redirect('/login');
+    }
+
+    const username = req.session.username;
+    const query1 = `SELECT order_id FROM order_details WHERE username = ? ORDER BY order_id DESC LIMIT 1`;
+
+    pool.query(query1, [username], (err, results) => {
+        if (err) {
+            return res.send(err);
+        }
+
+        if (results.length === 0) {
+            return res.send('Order not found');
+        }
+
+        const orderId = results[0].order_id;
+
+        const query2 = `UPDATE order_details SET status = 'Payment Done' WHERE order_id = ?`;
+
+        pool.query(query2, [orderId], (err, result) => {
+            if (err) {
+                return res.send(err);
+            }
+
+            const query3 = `DELETE FROM cart WHERE username = ?`;
+
+            pool.query(query3, [username], (err, result) => {
+                if (err) {
+                    return res.send(err);
+                }
+
+                const query4 = `
+                    UPDATE items i
+                    JOIN order_items oi ON i.item_name = oi.item_name
+                    SET i.stock = i.stock - oi.quantity
+                    WHERE oi.order_id = ?;
+                `;
+
+                pool.query(query4, [orderId], (err, result) => {
+                    if (err) {
+                        return res.send(err);
+                    }
+
+                    res.send('Order completed successfully');
+                });
+            });
+        });
+    });
+});
+
+
+
+
+route.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.redirect('/login');
+    console.log(req.session.username);
+
 })
+
+
+
+
 
 
 
